@@ -22,12 +22,22 @@ class NewNoteActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_note)
         roomdb = AppDatabase.getInstance(applicationContext)
         val factory = NewNoteViewModelFactory(application)
-        val note = Note(id = 0,
-            title = "hello",
-            body = "hello from noteapp")
+        val note = Note(0, title = "hello", body = "hello from noteapp")
 
         val viewModel = ViewModelProvider(this,factory).get(NewNoteViewModel::class.java)
         viewModel.insertNote(note)
+
+//        if (et_nameOfNewNote.text.isEmpty()){
+//            et_nameOfNewNote.error = "should not be empty"
+//        }
+//        if (et_bodyOfNote.text.isEmpty()){
+//            et_bodyOfNote.error = "should not be empty"
+//        }
+
+//        val insertnote = Note(title = et_nameOfNewNote.text.toString(),body = et_bodyOfNote.text.toString())
+        btn_save.setOnClickListener {
+            viewModel.insertNote(note)
+        }
         viewModel.dbState.observe(this, Observer{
             when (it){
                 is NewNoteViewModel.DBState.Success -> Toast.makeText(this,"Successfuly inserted",Toast.LENGTH_SHORT).show()

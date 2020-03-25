@@ -7,8 +7,8 @@
     tools:context=".ui.NewNoteActivity">
 
     <EditText
-        android:id="@+id/tv_nameOfNewNote"
-        android:layout_width="wrap_content"
+        android:id="@+id/et_nameOfNewNote"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textAlignment="center"
@@ -17,8 +17,8 @@
 
     <EditText
         android:layout_margin="10dp"
-        android:id="@+id/tv_bodyOfNote"
-        android:layout_width="match_parent"
+        android:id="@+id/et_bodyOfNote"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textAlignment="center"

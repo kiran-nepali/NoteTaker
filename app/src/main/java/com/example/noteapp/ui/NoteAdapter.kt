@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.list_view_holder.view.*
 
 class NoteAdapter(private val note:List<Note>):RecyclerView.Adapter<NoteViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
-        return NoteViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_view_holder,parent,true))
+        return NoteViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.list_view_holder,parent,false))
     }
 
     override fun getItemCount(): Int {
