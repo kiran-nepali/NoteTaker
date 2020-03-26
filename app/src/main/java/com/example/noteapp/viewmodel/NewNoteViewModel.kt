@@ -11,7 +11,6 @@ import io.reactivex.schedulers.Schedulers
 
 class NewNoteViewModel(application: Application) : ViewModel() {
 
-    val notelivedata = MutableLiveData<List<Note>>()
     val error = MutableLiveData<String>()
     val disposable = CompositeDisposable()
     val noteDBRequest = AppDatabase.getInstance(application).noteDAO()
@@ -25,6 +24,7 @@ class NewNoteViewModel(application: Application) : ViewModel() {
                 .subscribe({
                     dbState.value = DBState.Success
                 }, {
+                    error.value = it.localizedMessage
                     dbState.value = DBState.Failure
                 })
         )
@@ -33,5 +33,10 @@ class NewNoteViewModel(application: Application) : ViewModel() {
     sealed class DBState {
         object Success : DBState()
         object Failure : DBState()
+    }
+
+    override fun onCleared() {
+        disposable.clear()
+        super.onCleared()
     }
 }

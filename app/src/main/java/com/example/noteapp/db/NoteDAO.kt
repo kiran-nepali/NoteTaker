@@ -14,7 +14,7 @@ interface NoteDAO {
     @Query("SELECT * FROM note WHERE id IN (:noteID)")
     fun getAllNotesById(noteID:IntArray):List<Note>
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(note:Note):Completable
 
     @Delete

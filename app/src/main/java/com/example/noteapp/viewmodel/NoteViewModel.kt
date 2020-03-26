@@ -29,5 +29,9 @@ class NoteViewModel(application: Application):ViewModel() {
         )
     }
 
+    override fun onCleared() {
+        disposable.clear()
+        super.onCleared()
+    }
 
 }
