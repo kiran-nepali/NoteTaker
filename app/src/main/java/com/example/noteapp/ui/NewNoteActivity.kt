@@ -28,18 +28,19 @@ class NewNoteActivity : AppCompatActivity() {
         val viewModel = ViewModelProvider(this,factory).get(NewNoteViewModel::class.java)
 //        viewModel.insertNote(note)
 
-        if (et_nameOfNewNote.text.isEmpty()){
-            et_nameOfNewNote.error = "should not be empty"
-        }
-        if (et_bodyOfNote.text.isEmpty()){
-            et_bodyOfNote.error = "should not be empty"
-        }
+//        if (et_nameOfNewNote.text.isEmpty()){
+//            et_nameOfNewNote.error = "should not be empty"
+//        }
+//        if (et_bodyOfNote.text.isEmpty()){
+//            et_bodyOfNote.error = "should not be empty"
+//        }
 
-        val notetitle = et_nameOfNewNote.text.toString()
-        val bodytitle = et_bodyOfNote.text.toString()
 
-        val insertnote = Note(notetitle,bodytitle)
+
         btn_save.setOnClickListener {
+            val notetitle = et_nameOfNewNote.text.toString()
+            val bodytitle = et_bodyOfNote.text.toString()
+            val insertnote = Note(notetitle,bodytitle)
             viewModel.insertNote(insertnote)
         }
 

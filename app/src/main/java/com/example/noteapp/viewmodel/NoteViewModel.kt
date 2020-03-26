@@ -1,5 +1,6 @@
 package com.example.noteapp.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.noteapp.data.Note
@@ -16,6 +17,7 @@ class NoteViewModel(private val repository: NoteRepository) : ViewModel() {
         disposable.add(
             repository.getAllNote()
                 .subscribe({
+                    Log.d("dbget",it.toString())
                     notelivedata.value = it
                 }, {
                     error.value = it.localizedMessage

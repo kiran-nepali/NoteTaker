@@ -1,14 +1,11 @@
 package com.example.noteapp.viewmodel
 
-import android.app.Application
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.noteapp.data.Note
-import com.example.noteapp.db.AppDatabase
 import com.example.noteapp.repository.NoteRepository
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 
 class NewNoteViewModel(private val repository: NoteRepository) : ViewModel() {
 
@@ -17,15 +14,22 @@ class NewNoteViewModel(private val repository: NoteRepository) : ViewModel() {
     val dbState = MutableLiveData<DBState>()
 
     fun insertNote(note: Note) {
-        disposable.add(
-            repository.insertNote(note)
-                .subscribe({
-                    dbState.value = DBState.Success
-                }, {
-                    error.value = it.localizedMessage
-                    dbState.value = DBState.Failure
-                })
-        )
+//        if (note.title.isNotEmpty() && note.body.isNotEmpty()){
+            disposable.add(
+                repository.insertNote(note)
+                    .subscribe({
+                        Log.d("dbinsertion", note.title)
+                        dbState.value = DBState.Success
+                    }, {
+                        error.value = it.localizedMessage
+                        dbState.value = DBState.Failure
+                    })
+            )
+//        }
+//        else {
+//            error.value = "note is empty"
+//        }
+
     }
 
     sealed class DBState {
