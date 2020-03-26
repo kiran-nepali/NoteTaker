@@ -15,11 +15,11 @@ import com.example.noteapp.viewmodel.NoteViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var roomdb:RoomDatabase
+//    private lateinit var roomdb:RoomDatabase
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        roomdb = AppDatabase.getInstance(applicationContext)
+//        roomdb = AppDatabase.getInstance(applicationContext)
         val factory = NoteViewModelFactory(application)
         val viewModel = ViewModelProvider(this,factory).get(NoteViewModel::class.java)
         viewModel.getNotes()

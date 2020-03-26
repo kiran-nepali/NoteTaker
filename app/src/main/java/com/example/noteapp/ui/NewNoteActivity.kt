@@ -17,12 +17,12 @@ import kotlinx.android.synthetic.main.activity_new_note.*
 
 class NewNoteActivity : AppCompatActivity() {
 
-    private lateinit var roomdb:RoomDatabase
+//    private lateinit var roomdb:RoomDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_note)
-        roomdb = AppDatabase.getInstance(applicationContext)
+//        roomdb = AppDatabase.getInstance(applicationContext)
         val factory = NewNoteViewModelFactory(application)
 //        val note = Note(0, title = "hello", body = "hello from noteapp")
 
@@ -36,7 +36,10 @@ class NewNoteActivity : AppCompatActivity() {
             et_bodyOfNote.error = "should not be empty"
         }
 
-        val insertnote = Note(et_nameOfNewNote.text.toString(),et_bodyOfNote.text.toString())
+        val notetitle = et_nameOfNewNote.text.toString()
+        val bodytitle = et_bodyOfNote.text.toString()
+
+        val insertnote = Note(notetitle,bodytitle)
         btn_save.setOnClickListener {
             viewModel.insertNote(insertnote)
         }
