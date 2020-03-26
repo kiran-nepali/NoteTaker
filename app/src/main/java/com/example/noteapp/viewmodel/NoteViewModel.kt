@@ -1,31 +1,25 @@
 package com.example.noteapp.viewmodel
 
-import android.app.Application
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.noteapp.data.Note
-import com.example.noteapp.db.AppDatabase
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.example.noteapp.repository.NoteRepository
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
 
-class NoteViewModel(application: Application):ViewModel() {
+class NoteViewModel(private val repository: NoteRepository) : ViewModel() {
 
     val notelivedata = MutableLiveData<List<Note>>()
     val error = MutableLiveData<String>()
     val disposable = CompositeDisposable()
-    val noteDBRequest = AppDatabase.getInstance(application).noteDAO()
 
-    fun getNotes(){
+    fun getNotes() {
         disposable.add(
-        noteDBRequest.getAllNotes()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                notelivedata.value = it
-            },{
-                error.value = it.localizedMessage
-            })
+            repository.getAllNote()
+                .subscribe({
+                    notelivedata.value = it
+                }, {
+                    error.value = it.localizedMessage
+                })
         )
     }
 

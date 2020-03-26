@@ -11,19 +11,18 @@ import androidx.room.RoomDatabase
 import com.example.noteapp.R
 import com.example.noteapp.data.Note
 import com.example.noteapp.db.AppDatabase
+import com.example.noteapp.repository.NoteRepository
 import com.example.noteapp.viewmodel.NewNoteViewModel
 import com.example.noteapp.viewmodel.NewNoteViewModelFactory
 import kotlinx.android.synthetic.main.activity_new_note.*
 
 class NewNoteActivity : AppCompatActivity() {
 
-//    private lateinit var roomdb:RoomDatabase
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_note)
-//        roomdb = AppDatabase.getInstance(applicationContext)
-        val factory = NewNoteViewModelFactory(application)
+        val repository = NoteRepository(application)
+        val factory = NewNoteViewModelFactory(repository)
 //        val note = Note(0, title = "hello", body = "hello from noteapp")
 
         val viewModel = ViewModelProvider(this,factory).get(NewNoteViewModel::class.java)

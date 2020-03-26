@@ -5,22 +5,20 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.noteapp.data.Note
 import com.example.noteapp.db.AppDatabase
+import com.example.noteapp.repository.NoteRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
-class NewNoteViewModel(application: Application) : ViewModel() {
+class NewNoteViewModel(private val repository: NoteRepository) : ViewModel() {
 
     val error = MutableLiveData<String>()
     val disposable = CompositeDisposable()
-    val noteDBRequest = AppDatabase.getInstance(application).noteDAO()
     val dbState = MutableLiveData<DBState>()
 
     fun insertNote(note: Note) {
         disposable.add(
-            noteDBRequest.insertAll(note)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+            repository.insertNote(note)
                 .subscribe({
                     dbState.value = DBState.Success
                 }, {
