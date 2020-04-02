@@ -33,7 +33,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun noteAdapter(note:List<Note>){
-        val adapter = NoteAdapter(note)
+        val adapter = NoteAdapter(note,object :OnNoteClickListener{
+            override fun onClicked(note: Note) {
+                val intent = Intent(this@MainActivity,ExistingNoteActivity::class.java)
+                intent.putExtra("noteTitle",note.title)
+                intent.putExtra("noteBody",note.body)
+                startActivity(intent)
+            }
+
+        })
         rv_notelist.layoutManager = LinearLayoutManager(this)
         rv_notelist.adapter = adapter
     }
