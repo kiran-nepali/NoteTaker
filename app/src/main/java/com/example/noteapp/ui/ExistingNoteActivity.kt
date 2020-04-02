@@ -4,10 +4,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.noteapp.R
 
-class NoteDetailsActivity : AppCompatActivity() {
+class ExistingNoteActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_note_details)
+        setContentView(R.layout.activity_existing_note)
     }
 }

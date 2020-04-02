@@ -1,4 +1,4 @@
-package com.example.noteapp.viewmodel
+package com.example.noteapp.viewmodel.newnote
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
@@ -19,10 +19,12 @@ class NewNoteViewModel(private val repository: NoteRepository) : ViewModel() {
                 repository.insertNote(note)
                     .subscribe({
                         Log.d("dbinsertion", note.title)
-                        dbState.value = DBState.Success
+                        dbState.value =
+                            DBState.Success
                     }, {
                         error.value = it.localizedMessage
-                        dbState.value = DBState.Failure
+                        dbState.value =
+                            DBState.Failure
                     })
             )
 //        }

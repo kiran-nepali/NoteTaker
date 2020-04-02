@@ -1,19 +1,17 @@
 package com.example.noteapp.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.room.RoomDatabase
 import com.example.noteapp.R
 import com.example.noteapp.data.Note
-import com.example.noteapp.db.AppDatabase
 import com.example.noteapp.repository.NoteRepository
-import com.example.noteapp.viewmodel.NewNoteViewModel
-import com.example.noteapp.viewmodel.NewNoteViewModelFactory
+import com.example.noteapp.viewmodel.newnote.NewNoteViewModel
+import com.example.noteapp.viewmodel.newnote.NewNoteViewModelFactory
 import kotlinx.android.synthetic.main.activity_new_note.*
 
 class NewNoteActivity : AppCompatActivity() {
@@ -22,40 +20,40 @@ class NewNoteActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_new_note)
         val repository = NoteRepository(application)
-        val factory = NewNoteViewModelFactory(repository)
+        val factory =
+            NewNoteViewModelFactory(
+                repository
+            )
 //        val note = Note(0, title = "hello", body = "hello from noteapp")
 
-        val viewModel = ViewModelProvider(this,factory).get(NewNoteViewModel::class.java)
+        val viewModel = ViewModelProvider(this, factory).get(NewNoteViewModel::class.java)
 //        viewModel.insertNote(note)
-
-//        if (et_nameOfNewNote.text.isEmpty()){
-//            et_nameOfNewNote.error = "should not be empty"
-//        }
-//        if (et_bodyOfNote.text.isEmpty()){
-//            et_bodyOfNote.error = "should not be empty"
-//        }
-
-
 
         btn_save.setOnClickListener {
             val notetitle = et_nameOfNewNote.text.toString()
             val bodytitle = et_bodyOfNote.text.toString()
-            val insertnote = Note(notetitle,bodytitle)
-            viewModel.insertNote(insertnote)
+            if (notetitle.isEmpty()) {
+                et_nameOfNewNote.error = "title should not be empty"
+            } else if (bodytitle.isEmpty()) {
+                et_bodyOfNote.error = "message should not be empty"
+            } else {
+                val insertnote = Note(notetitle, bodytitle)
+                viewModel.insertNote(insertnote)
+            }
         }
 
-        val errormsg = viewModel.error.observe(this,Observer{
-            Toast.makeText(this,it,Toast.LENGTH_SHORT).show()
-            Log.d("errornote",it)
+        val errormsg = viewModel.error.observe(this, Observer {
+            Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
+            Log.d("errornote", it)
         })
 
-        fun successmsg(){
-            Toast.makeText(this,"Successfuly inserted",Toast.LENGTH_SHORT).show()
-            val intent = Intent(this@NewNoteActivity,MainActivity::class.java)
+        fun successmsg() {
+            Toast.makeText(this, "Successfuly inserted", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this@NewNoteActivity, MainActivity::class.java)
             startActivity(intent)
         }
-        viewModel.dbState.observe(this, Observer{
-            when (it){
+        viewModel.dbState.observe(this, Observer {
+            when (it) {
                 is NewNoteViewModel.DBState.Success -> successmsg()
                 is NewNoteViewModel.DBState.Failure -> errormsg
             }
