@@ -5,11 +5,12 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "note")
-data class Note (
-    @ColumnInfo(name = "title") var title:String,
-    @ColumnInfo(name = "body") var body:String
-){
+data class Note(
+    @ColumnInfo(name = "title") var title: String,
+    @ColumnInfo(name = "body") var body: String
+) {
     @ColumnInfo(name = "id")
-    @PrimaryKey(autoGenerate = true) var id:Long = 0
+    @PrimaryKey(autoGenerate = true)
+    var id: Long = 0
 }
 

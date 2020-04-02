@@ -23,4 +23,10 @@ class NoteRepository(application: Application) {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
+
+    fun updateNote(note:Note):Completable{
+        return noteDBRequest.update(note)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
 }

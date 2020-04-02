@@ -1,8 +1,8 @@
 package com.example.noteapp.ui
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,24 +20,25 @@ class MainActivity : AppCompatActivity() {
         val repository = NoteRepository(application)
         val factory =
             NoteViewModelFactory(repository)
-        val viewModel = ViewModelProvider(this,factory).get(NoteViewModel::class.java)
+        val viewModel = ViewModelProvider(this, factory).get(NoteViewModel::class.java)
         viewModel.getNotes()
 
         viewModel.notelivedata.observe(this, Observer {
             noteAdapter(it)
         })
         fab_btn_note.setOnClickListener {
-            val intent = Intent(this@MainActivity,NewNoteActivity::class.java)
+            val intent = Intent(this@MainActivity, NewNoteActivity::class.java)
             startActivity(intent)
         }
     }
 
-    fun noteAdapter(note:List<Note>){
-        val adapter = NoteAdapter(note,object :OnNoteClickListener{
+    fun noteAdapter(note: List<Note>) {
+        val adapter = NoteAdapter(note, object : OnNoteClickListener {
             override fun onClicked(note: Note) {
-                val intent = Intent(this@MainActivity,ExistingNoteActivity::class.java)
-                intent.putExtra("noteTitle",note.title)
-                intent.putExtra("noteBody",note.body)
+                val intent = Intent(this@MainActivity, ExistingNoteActivity::class.java)
+                intent.putExtra("noteTitle", note.title)
+                intent.putExtra("noteBody", note.body)
+                intent.putExtra("noteId", note.id)
                 startActivity(intent)
             }
 

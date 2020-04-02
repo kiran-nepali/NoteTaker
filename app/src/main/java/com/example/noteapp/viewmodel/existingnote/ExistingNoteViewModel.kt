@@ -1,32 +1,29 @@
-package com.example.noteapp.viewmodel.newnote
+package com.example.noteapp.viewmodel.existingnote
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.noteapp.data.Note
 import com.example.noteapp.repository.NoteRepository
 import io.reactivex.disposables.CompositeDisposable
 
-class NewNoteViewModel(private val repository: NoteRepository) : ViewModel() {
+class ExistingNoteViewModel(private val repository: NoteRepository) : ViewModel() {
 
     val error = MutableLiveData<String>()
     val disposable = CompositeDisposable()
-    val dbState = MutableLiveData<DBState>()
+    val dbstate = MutableLiveData<DBState>()
 
-    fun insertNote(note: Note) {
+    fun updateNote(note: Note) {
         disposable.add(
-            repository.insertNote(note)
+            repository.updateNote(note)
                 .subscribe({
-                    Log.d("dbinsertion", note.title)
-                    dbState.value =
-                        DBState.Success
+                    dbstate.value = DBState.Success
                 }, {
+                    dbstate.value = DBState.Failure
                     error.value = it.localizedMessage
-                    dbState.value =
-                        DBState.Failure
                 })
         )
     }
+
 
     sealed class DBState {
         object Success : DBState()
