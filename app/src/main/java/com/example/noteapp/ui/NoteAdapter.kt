@@ -3,6 +3,7 @@ package com.example.noteapp.ui
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import com.example.noteapp.R
 import com.example.noteapp.data.Note
@@ -20,11 +21,15 @@ class NoteAdapter(private val note:List<Note>,private val listener: OnNoteClickL
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         holder.title.text = note[position].title
         holder.bind(note[position],listener)
+        holder.delbtn.setOnClickListener {
+            listener.onClickDeleteBtn(note[position])
+        }
     }
 }
 
 class NoteViewHolder(view: View):RecyclerView.ViewHolder(view){
     val title = view.tv_nameOfNote_viewholder
+    val delbtn = view.btn_delete
     fun bind(note: Note,listener: OnNoteClickListener){
         itemView.setOnClickListener {
             listener.onClicked(note)
@@ -34,4 +39,5 @@ class NoteViewHolder(view: View):RecyclerView.ViewHolder(view){
 
 interface OnNoteClickListener{
     fun onClicked(note:Note)
+    fun onClickDeleteBtn(note:Note)
 }

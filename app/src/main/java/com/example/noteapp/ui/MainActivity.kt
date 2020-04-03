@@ -2,6 +2,8 @@ package com.example.noteapp.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -12,6 +14,7 @@ import com.example.noteapp.repository.NoteRepository
 import com.example.noteapp.viewmodel.note.NoteViewModel
 import com.example.noteapp.viewmodel.note.NoteViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.list_view_holder.*
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,8 +45,14 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
+            override fun onClickDeleteBtn(note:Note) {
+                val noteid = note.id
+                Toast.makeText(this@MainActivity,noteid.toString(),Toast.LENGTH_SHORT).show()
+            }
+
         })
         rv_notelist.layoutManager = LinearLayoutManager(this)
         rv_notelist.adapter = adapter
+
     }
 }
