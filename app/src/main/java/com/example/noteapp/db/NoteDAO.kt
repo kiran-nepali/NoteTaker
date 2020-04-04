@@ -18,7 +18,7 @@ interface NoteDAO {
     fun insertAll(note:Note):Completable
 
     @Delete
-    fun delete(note:Note)
+    fun delete(note:Note):Completable
 
     @Update
     fun update(note: Note):Completable

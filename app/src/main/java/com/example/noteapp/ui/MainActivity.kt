@@ -2,7 +2,7 @@ package com.example.noteapp.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -14,16 +14,16 @@ import com.example.noteapp.repository.NoteRepository
 import com.example.noteapp.viewmodel.note.NoteViewModel
 import com.example.noteapp.viewmodel.note.NoteViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.list_view_holder.*
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var viewModel: NoteViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val repository = NoteRepository(application)
         val factory =
             NoteViewModelFactory(repository)
-        val viewModel = ViewModelProvider(this, factory).get(NoteViewModel::class.java)
+        viewModel = ViewModelProvider(this, factory).get(NoteViewModel::class.java)
         viewModel.getNotes()
 
         viewModel.notelivedata.observe(this, Observer {
@@ -45,14 +45,32 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             }
 
-            override fun onClickDeleteBtn(note:Note) {
-                val noteid = note.id
-                Toast.makeText(this@MainActivity,noteid.toString(),Toast.LENGTH_SHORT).show()
+            override fun onClickDeleteBtn(note: Note) {
+//                val noteid = note.id
+                viewModel.deleteNote(note)
+                viewModel.dbState.observe(this@MainActivity, Observer {
+                    when (it) {
+                        is NoteViewModel.DBState.SUCCESS -> successmsg()
+                        is NoteViewModel.DBState.FAILURE -> errormsg()
+                    }
+                })
             }
-
         })
         rv_notelist.layoutManager = LinearLayoutManager(this)
         rv_notelist.adapter = adapter
+    }
 
+    fun successmsg(){
+        Toast.makeText(this@MainActivity,"Deleted Successfully", Toast.LENGTH_SHORT).show()
+        finish()
+        startActivity(intent)
+    }
+
+    fun errormsg(){
+        viewModel.error.observe(this@MainActivity, Observer {
+            Toast.makeText(this@MainActivity, it, Toast.LENGTH_SHORT).show()
+            Log.d("errornote", it)
+        })
     }
 }
+

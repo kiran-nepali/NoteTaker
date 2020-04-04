@@ -29,4 +29,10 @@ class NoteRepository(application: Application) {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
+
+    fun deleteNote(note: Note):Completable{
+        return noteDBRequest.delete(note)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
 }
