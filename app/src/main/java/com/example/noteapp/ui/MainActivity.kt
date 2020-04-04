@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onClickDeleteBtn(note: Note) {
-//                val noteid = note.id
                 viewModel.deleteNote(note)
                 viewModel.dbState.observe(this@MainActivity, Observer {
                     when (it) {
@@ -60,13 +59,13 @@ class MainActivity : AppCompatActivity() {
         rv_notelist.adapter = adapter
     }
 
-    fun successmsg(){
-        Toast.makeText(this@MainActivity,"Deleted Successfully", Toast.LENGTH_SHORT).show()
+    fun successmsg() {
+        Toast.makeText(this@MainActivity, "Deleted Successfully", Toast.LENGTH_SHORT).show()
         finish()
         startActivity(intent)
     }
 
-    fun errormsg(){
+    fun errormsg() {
         viewModel.error.observe(this@MainActivity, Observer {
             Toast.makeText(this@MainActivity, it, Toast.LENGTH_SHORT).show()
             Log.d("errornote", it)
