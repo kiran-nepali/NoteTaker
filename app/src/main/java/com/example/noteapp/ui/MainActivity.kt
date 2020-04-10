@@ -15,6 +15,7 @@ import com.example.noteapp.viewmodel.note.NoteViewModel
 import com.example.noteapp.viewmodel.note.NoteViewModelFactory
 import kotlinx.android.synthetic.main.activity_main.*
 
+
 class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: NoteViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,8 +62,8 @@ class MainActivity : AppCompatActivity() {
 
     fun successmsg() {
         Toast.makeText(this@MainActivity, "Deleted Successfully", Toast.LENGTH_SHORT).show()
-        finish()
         startActivity(intent)
+        finish()
     }
 
     fun errormsg() {
@@ -71,5 +72,6 @@ class MainActivity : AppCompatActivity() {
             Log.d("errornote", it)
         })
     }
+
 }
 

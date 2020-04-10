@@ -2,23 +2,31 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="100dp"
     android:layout_margin="10dp"
     android:orientation="vertical"
     app:cardCornerRadius="10dp"
     app:cardElevation="10dp">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
     <TextView
         android:id="@+id/tv_nameOfNote_viewholder"
-        android:layout_width="wrap_content"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:textAlignment="center" />
+        android:layout_margin="10dp"
+        android:layout_gravity="center_vertical" />
 
     <Button
         android:id="@+id/btn_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="DELETE"/>
+        android:layout_gravity="center_vertical"
+        android:text="DELETE" />
+    </LinearLayout>
 </androidx.cardview.widget.CardView>

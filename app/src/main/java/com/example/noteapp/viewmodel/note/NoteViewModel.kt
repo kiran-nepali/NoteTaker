@@ -18,8 +18,8 @@ class NoteViewModel(private val repository: NoteRepository) : ViewModel() {
         disposable.add(
             repository.getAllNote()
                 .subscribe({
-                    Log.d("dbget", it.toString())
                     notelivedata.value = it
+                    Log.d("dbget", it.toString())
                 }, {
                     error.value = it.localizedMessage
                 })
